@@ -1,28 +1,5 @@
 version: '2.2'
 services:
-    forms_app:
-      build:
-        context: .
-      ports:
-        - "5000:5000"
-#      volumes:
-#        - ./logs/forms_app:/forms_app/logs
-      command: gunicorn forms_app.wsgi_app:app --bind 0.0.0.0:5000  --reload
-      networks:
-        - forms_network
-
-    nginx:
-      image: nginx:1.19.2
-      volumes:
-        - /tmp/logs/nginx/:/var/log/nginx/
-        - ./deploy/etc/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-        - ./deploy/etc/nginx/conf.d:/etc/nginx/conf.d:ro
-      depends_on:
-        - users_actions_app
-      ports:
-        - 8080:80
-      networks:
-        - forms_network
 
     mongodb:
       image: mongo
@@ -31,13 +8,8 @@ services:
         - "27017:27017"
       volumes:
         - mongodb_data:/data/db
-      environment:
-        MONGO_INITDB_ROOT_USERNAME: your_username
-        MONGO_INITDB_ROOT_PASSWORD: your_password
-
       networks:
         - forms_network
-
 
     mongo-express:
       image: mongo-express
@@ -47,8 +19,8 @@ services:
         - "8081:8081"
       environment:
         ME_CONFIG_MONGODB_URL: mongodb://mongodb:27017/
-      links:
-        - mongodb
+        ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_LOGIN}
+        ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASSWORD}
       networks:
         - forms_network
 

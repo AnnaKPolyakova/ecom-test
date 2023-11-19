@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import Optional
 
 from pydantic.v1 import BaseModel, Extra
 
@@ -36,4 +36,3 @@ class Data(BaseModel):
         "field3": "12.02.2013",
         "field4": "text",
     }
-

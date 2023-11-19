@@ -4,8 +4,8 @@ from http import HTTPStatus
 from flask import Blueprint, request
 from spectree import Response
 
-from forms_app.api.v1.models import Name, FormDescription, Status, Data
-from forms_app.api.v1.servises import FormFinder, CHECKS_AND_TYPES
+from forms_app.api.v1.models import Data, FormDescription, Name, Status
+from forms_app.api.v1.servises import CHECKS_AND_TYPES, FormFinder
 from forms_app.constants import TYPE_INVALID
 from forms_app.utils import form_app_doc
 
@@ -24,10 +24,12 @@ form_api = Blueprint("form", __name__)
 )
 def get_form():
     logging.debug("get_form api start")
-    if request.content_type != 'application/json':
+    if request.content_type != "application/json":
         logging.error("get_form api: {error}".format(error="json_invalid"))
-        return {"status": False, "info": {"body": "json_invalid"}}, \
-            HTTPStatus.BAD_REQUEST
+        return {
+            "status": False,
+            "info": {"body": "json_invalid"},
+        }, HTTPStatus.BAD_REQUEST
     try:
         res, status = FormFinder(
             request.get_json(), CHECKS_AND_TYPES

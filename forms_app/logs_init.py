@@ -20,7 +20,7 @@ class JsonFormatter(logging.Formatter):
             "level": record.levelname,
             "message": record.getMessage(),
             "module": record.module,
-            "request_id": getattr(record, "request_id", "")
+            "request_id": getattr(record, "request_id", ""),
         }
         return json.dumps(log)
 
@@ -30,45 +30,44 @@ def get_logs_settings_dict(settings):
     log_file = log_dir + settings.log_file
     makedirs(log_dir, exist_ok=True)
     log_dict = {
-            'version': 1,
-            'disable_existing_loggers': False,
-            'formatters': {
-                'standard': {
-                    '()': 'forms_app.logs_init.JsonFormatter',
-                },
-                "simple": {
-                    "format": "%(asctime)s - %(message)s",
-                },
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "standard": {
+                "()": "forms_app.logs_init.JsonFormatter",
             },
-            'filters': {
-                'app_filter': {
-                    '()': RequestIdFilter,
-                },
+            "simple": {
+                "format": "%(asctime)s - %(message)s",
             },
-            'handlers': {
-                'file': {
-                    'class': 'logging.FileHandler',
-                    'filename': log_file,
-                    'level': settings.log_level,
-                    'formatter': 'standard',
-                    'filters': ['app_filter'],
-                },
-                'console':
-                    {
-                        "class": "logging.StreamHandler",
-                        'level': settings.log_level,
-                        'formatter': 'simple',
-                    }
+        },
+        "filters": {
+            "app_filter": {
+                "()": RequestIdFilter,
             },
-            'root': {
-                'handlers': ['file', 'console'],
+        },
+        "handlers": {
+            "file": {
+                "class": "logging.FileHandler",
+                "filename": log_file,
+                "level": settings.log_level,
+                "formatter": "standard",
+                "filters": ["app_filter"],
             },
-            'loggers': {
-                '': {
-                    'handlers': ['file'],
-                    'level': settings.log_level,
-                    'propagate': True,
-                },
+            "console": {
+                "class": "logging.StreamHandler",
+                "level": settings.log_level,
+                "formatter": "simple",
             },
-        }
+        },
+        "root": {
+            "handlers": ["file", "console"],
+        },
+        "loggers": {
+            "": {
+                "handlers": ["file"],
+                "level": settings.log_level,
+                "propagate": True,
+            },
+        },
+    }
     return log_dict
