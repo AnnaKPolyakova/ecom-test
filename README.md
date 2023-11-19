@@ -63,5 +63,5 @@ http://0.0.0.0:8081/
 
 To open documentation:
 
-http://127.0.0.1:8000/v1/doc/redoc/
+http://127.0.0.1:8000/v1/doc/redoc/  
 http://127.0.0.1:8000/v1/doc/swagger/
