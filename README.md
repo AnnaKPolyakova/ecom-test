@@ -36,8 +36,8 @@ Available types of values: email, phone, text, data
 * Create .env file using [.env_example](.env_example)
 * `python -m venv venv` - create venv
 * `source venv/bin/activate` - activate venv
-* `pip install poery` - install poetry
-* `poery install` - install requirements
+* `pip install poetry` - install poetry
+* `poetry install` - install requirements
 
 #### Running mongodb and mongo-express in docker containers
 
@@ -59,9 +59,9 @@ To stop the container and remove volumes:
 
 To open mongo-express:
 
-http://0.0.0.0:8081/
+http://0.0.0.0:8081/ (login and password in .env)
 
 To open documentation:
 
-http://127.0.0.1:8000/v1/doc/redoc/  
-http://127.0.0.1:8000/v1/doc/swagger/
+http://127.0.0.1:5000/v1/doc/redoc/  
+http://127.0.0.1:5000/v1/doc/swagger/
